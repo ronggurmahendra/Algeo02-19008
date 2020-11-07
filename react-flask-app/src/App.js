@@ -5,9 +5,10 @@ import './App.css';
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
 
-  useEffect(() => {
+  useEffect(() => {n
     fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
+      setCurrentTime(data.id[1]);
+      console.log(data);
     });
   }, []);
 
@@ -20,7 +21,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
-          className="App-link"
+          className="App-lik"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
