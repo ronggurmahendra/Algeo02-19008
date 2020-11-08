@@ -74,7 +74,7 @@ def search(query, df, doc):
 doc = getDocuments('https://bola.kompas.com/')
 doc1 = cleanDocuments(doc)
 df = create_dataframe(doc1)
-q = 'liverpool arsenal'
+q = 'barcelona'
 A = search(q, df, doc)
 for i in A:
         x = i[0]
