@@ -80,5 +80,6 @@ for i in A:
         x = i[0]
         y = i[1]
         print("sim = ", x)
+        print("word count",len(y.split()))
         print(y)
         print("")
