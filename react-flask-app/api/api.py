@@ -26,9 +26,9 @@ def Post_query():
 def Get_result():
     print("sending result")
     return {"content" : [
-        {"title":"Title1" ,"body":"Body1"},
-        {"title":"Title2" ,"body":"Body2"},
-        {"title":"Title3" ,"body":"Body3"},
+        {"title":"Title1" ,"body":"Body1","sim":1},
+        {"title":"Title2" ,"body":"Body2","sim":2},
+        {"title":"Title3" ,"body":"Body3","sim":3},
         ]
     } #data dummy (sementara matriks string dulu aja), sementara blm dibikin front endnya baru dikirim aja kalau mau liat di console
     #return {} #diisi yang bakal dikirim ke cllient

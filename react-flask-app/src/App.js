@@ -18,17 +18,74 @@ function App() {
     fetch('/result').then(res => res.json()).then(data => {
       console.log("result received")
       setCurrentResult(data.content);
-      let array = [];
-      for(let i = 0;i < currentResult.length;i++){
-        array.push(
-          <p key = {currentResult[i].title} >{currentResult[i].title}</p>
-        );
-      }
-      setHTMLResult(array)
-      console.log(array)
-      console.log(HTMLResult)
+
     });
   }, []);
+
+  var renderList = setInterval(function bikinHTML(){
+    let array = [];
+    for(let i = 0;i < currentResult.length;i++){
+      let j = i + 15;
+      let k = i + 30;
+      array.push(
+        [<p key = {i} style = {{background: "white",
+          borderTopWidth: 1,
+          borderTopmColor: 'red',
+          borderTopStyle: 'solid',
+
+          borderLeftWidth: 1,
+          borderLeftmColor: 'red',
+          borderLeftStyle: 'solid',
+          borderRightWidth: 1,
+          borderRightmColor: 'red',
+          borderRightStyle: 'solid',
+
+          color : 'black',
+          borderstyle: "solid",
+          marginLeft: "25%",
+          width: "50%",
+          marginBottom:"0px"}}  
+          >title : {currentResult[i].title}</p>,
+        <p key = {j} style = {{background: "white",
+
+        color : 'black',
+        borderstyle: "solid",
+        marginLeft: "25%",
+        width: "50%",
+      
+        borderLeftWidth: 1,
+        borderLeftmColor: 'red',
+        borderLeftStyle: 'solid',
+        borderRightWidth: 1,
+        borderRightmColor: 'red',
+        borderRightStyle: 'solid',
+        marginBottom:"0px",
+        marginTop:"0px"
+      }}   >kalimat pertama : {currentResult[i].body}</p>,
+        <p key = {k} style = {{background: "white",
+        borderBottomWidth: 1,
+        borderBottomColor: 'red',
+        borderBottomStyle: 'solid',
+        color : 'black',
+        borderstyle: "solid",
+        marginLeft: "25%",
+        width: "50%",
+        borderLeftWidth: 1,
+        borderLeftmColor: 'red',
+        borderLeftStyle: 'solid',
+        borderRightWidth: 1,
+        borderRightmColor: 'red',
+        borderRightStyle: 'solid',
+        marginTop:"0px"
+      }}   >similatity : {currentResult[i].sim} %</p>]
+      );
+    }
+    console.log(array)
+    setHTMLResult(array)
+    //console.log('data.content',data.content)
+    //console.log('array',array)
+    //console.log('HTMLResult',HTMLResult)
+  },2000)
 
   function GetQueryFrontEnd(){
     //a.preventDefault();
@@ -85,7 +142,7 @@ function App() {
           <button type="button" onClick={onClickHandlerUpload}>Upload</button> 
 
         </div>
-        <div>
+        <div >
           {HTMLResult}
         </div>
       </div>
