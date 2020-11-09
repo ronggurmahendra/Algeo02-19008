@@ -17,5 +17,5 @@ def getDocumentsFiles():
             documents.append(' '.join(isi))
         f.close()
         return documents
-doc=getDocumentsFiles()        
-print(doc) 
+#doc=getDocumentsFiles()        
+#print(doc) 
