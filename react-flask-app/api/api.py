@@ -25,7 +25,12 @@ def Post_query():
 @app.route('/result')
 def Get_result():
     print("sending result")
-    return {"content" : [["title1","body1"],["title2","body2"],["title3","body3"]]} #data dummy (sementara matriks string dulu aja), sementara blm dibikin front endnya baru dikirim aja kalau mau liat di console
+    return {"content" : [
+        {"title":"Title1" ,"body":"Body1"},
+        {"title":"Title2" ,"body":"Body2"},
+        {"title":"Title3" ,"body":"Body3"},
+        ]
+    } #data dummy (sementara matriks string dulu aja), sementara blm dibikin front endnya baru dikirim aja kalau mau liat di console
     #return {} #diisi yang bakal dikirim ke cllient
 
 @app.route('/upload',methods=['POST'])
