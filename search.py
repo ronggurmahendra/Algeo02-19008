@@ -1,5 +1,6 @@
 import re
 import string
+from numpy.core.defchararray import title
 #from numpy.lib.function_base import vectorize
 import requests
 import numpy as np
@@ -60,7 +61,7 @@ def cleanDocuments(documents):
 
         return df'''
 
-def search(query, doc1, doc):
+def search(query, doc1, doc, title):
         query = stemmer.stem(query)
         query = query.split()
         
@@ -76,24 +77,22 @@ def search(query, doc1, doc):
                         if element[i] == j:
                                 q_vector[i] += 1
         q_vector = np.array(q_vector)
-        print(q_vector)
-        print(element)
         
         vectors = []
+        wordcount = []
         for i in doc1:
                 v1 = [0 for i in range (len(element))]
                 i = i.split()
-                
+                wordcount.append(len(i))
                 for j in i:
                         for k in range(len(element)):
                                 if j == element[k]:
                                         v1[k] += 1
                                         break
                 v1 = np.array(v1)
-
                 vectors.append(v1)
 
-        print(vectors)
+        #print(vectors)
 
         similarity = []
         q_norm = np.linalg.norm(q_vector)
@@ -101,25 +100,28 @@ def search(query, doc1, doc):
                 norm = np.linalg.norm(i)
                 if norm != 0:
                         sim = np.dot(i, q_vector)/ (q_norm * norm)
+                        sim = sim*100
                 else:
                         sim = 0
                 similarity.append(sim)
-        print(similarity)
+        #print(similarity)
 
-                
-        '''q_vector = vectorizer.transform(query).toarray().reshape(df.shape[0],)
-        print(q_vector)
-        sim = {}
-        for i in range(10):
-                sim[i] = np.dot(df.loc[:, i].values, q_vector) / np.linalg.norm(df.loc[:,i])
+        data = {'similarity': similarity,
+                'document': doc,
+                'jumlah kata': wordcount}
 
-        sorted_sim = sorted(sim.items(), key = lambda x: x[1], reverse = True)
+        df = pd.DataFrame(data, columns = ['similarity', 'document', 'jumlah kata'])
+        df = df.sort_values(by=['similarity'], ascending='False')
+        #print(df)
 
-        result = []
-        for k,v in sorted_sim:
-                if v != 0.0:
-                        result.append((v, doc[k]))
-        return result'''
+        title = np.concatenate((['query'], title))
+        q_vector = [q_vector]
+        vectors = np.concatenate((q_vector, vectors))
+        df2 = pd.DataFrame(vectors, columns = element, index = title)
+        #print(df2)
+        
+        return (df, df2)
+
 
 #doc = getDocuments('https://bola.kompas.com/')
 doc=bacafile.getDocumentsFiles()
@@ -133,5 +135,8 @@ q = 'motogp memenangkan motor'
 #print(q)
 #for i in q:
         #print(i)
-search(q, doc1, doc)
+judul = ['d1', 'd2', 'd3']
+(df, df2) = search(q, doc1, doc, judul)
+print(df)
+print(df2)
 #print(doc1)
