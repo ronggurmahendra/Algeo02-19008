@@ -1,4 +1,5 @@
 import os,sys,shutil
+import numpy as np
 #baca dokumen dari satu dir
 def getDocumentsFiles():
         #cari path
@@ -19,13 +20,18 @@ def getDocumentsFiles():
                 if counter==0:
                     title.append(i.strip("\n"))
                     counter=counter+1
-                elif counter==1:
-                    frstsntc.append(i.strip("\n"))
-                isi.append(i.strip("\n"))
+                else:
+                    isi.append(i.strip("\n"))
+    
+            kalimat = isi[0].split(". ")
+            frstsntc.append(kalimat[0])
+            isi = np.concatenate((title, isi))
             documents.append(' '.join(isi))
         f.close()
-        print(title)
-        print(frstsntc) 
+        #print(title)
+        #print(frstsntc)
+        #print(documents)
+        #print(documents) 
         return (documents,title,frstsntc)
 # doc=getDocumentsFiles()        
 # print(doc)

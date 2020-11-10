@@ -61,7 +61,7 @@ def cleanDocuments(documents):
 
         return df'''
 
-def search(query, doc1, doc, title):
+def search(query, doc1, title, first):
         query = stemmer.stem(query)
         query = query.split()
         
@@ -100,31 +100,33 @@ def search(query, doc1, doc, title):
                 norm = np.linalg.norm(i)
                 if norm != 0:
                         sim = np.dot(i, q_vector)/ (q_norm * norm)
-                        sim = sim*100
+                        sim *= 100
                 else:
                         sim = 0
                 similarity.append(sim)
         #print(similarity)
 
         data = {'similarity': similarity,
-                'document': doc,
+                'title' : title,
+                'first': first,
                 'jumlah kata': wordcount}
 
-        df = pd.DataFrame(data, columns = ['similarity', 'document', 'jumlah kata'])
-        df = df.sort_values(by=['similarity'], ascending='False')
+        df = pd.DataFrame(data, columns = ['similarity', 'title', 'first', 'jumlah kata'])
+        df = df.sort_values(by=['similarity'], ascending=False)
         #print(df)
 
         title = np.concatenate((['query'], title))
         q_vector = [q_vector]
         vectors = np.concatenate((q_vector, vectors))
         df2 = pd.DataFrame(vectors, columns = element, index = title)
+        df2 = df2.T
         #print(df2)
         
         return (df, df2)
 
 
 #doc = getDocuments('https://bola.kompas.com/')
-doc=bacafile.getDocumentsFiles()
+(doc, title, first)=bacafile.getDocumentsFiles()
 doc1 = cleanDocuments(doc)
 #print(doc[1])
 #print(doc1[1])
@@ -135,8 +137,8 @@ q = 'motogp memenangkan motor'
 #print(q)
 #for i in q:
         #print(i)
-judul = ['d1', 'd2', 'd3']
-(df, df2) = search(q, doc1, doc, judul)
+
+(df, df2) = search(q, doc1, title, first)
 print(df)
 print(df2)
 #print(doc1)
