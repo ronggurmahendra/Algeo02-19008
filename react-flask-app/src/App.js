@@ -1,18 +1,30 @@
 import React, { useState, useEffect, Component } from 'react';
 import './App.css';
 //import { Form, Input, Rating, Button } from "semantic-ui-react";
-/*
+
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
-*/
+//import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
+
 import axios from 'axios';
 //import Contact from './Dokumen';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
+//import {Router, Link, RouteHandler} from 'react-router';
+
+
 function App() {
   const [currentResult, setCurrentResult] = useState(0);
   const [HTMLResult, setHTMLResult] = useState();
   const [filestate,setFilestate] = useState();
+  const [pageState,setPageState] = useState();
   //var url = "http://localhost:3000"
   //const [query,setQuer]
+  //setPageState("/");
   useEffect(() => {
     //console.log("masuk sini")
     fetch('/result').then(res => res.json()).then(data => {
@@ -25,10 +37,14 @@ function App() {
   var renderList = setInterval(function bikinHTML(){
     let array = [];
     for(let i = 0;i < currentResult.length;i++){
-      let j = i + 15;
-      let k = i + 30;
+      let j = i + 100;
+      let k = i + 200;
+      var iStr = (i+1).toString();
+      var link = "/Doc".concat(iStr);
       array.push(
-        [<p key = {i} style = {{background: "white",
+        [  
+        <Router><Link to = {link}  key = {i} /*style = {{
+          background: "white",
           borderTopWidth: 1,
           borderTopmColor: 'red',
           borderTopStyle: 'solid',
@@ -44,8 +60,9 @@ function App() {
           borderstyle: "solid",
           marginLeft: "25%",
           width: "50%",
-          marginBottom:"0px"}}  
-          >title : {currentResult[i].title}</p>,
+          marginBottom:"0px"}} */ 
+          >{currentResult[i].title}</Link></Router>,
+
         <p key = {j} style = {{background: "white",
 
         color : 'black',
@@ -80,7 +97,7 @@ function App() {
       }}   >similatity : {currentResult[i].sim} %</p>]
       );
     }
-    console.log(array)
+    //console.log(array)
     setHTMLResult(array)
     //console.log('data.content',data.content)
     //console.log('array',array)
@@ -93,10 +110,6 @@ function App() {
     console.log(query);
     PostQuery(query);
   }
-/*
-  var streamresult = setInterval(function () {
-    console.log("tetsing")
-  },1000);*/
 
   function PostQuery(data){
     console.log("Sending Query")
@@ -129,25 +142,26 @@ function App() {
     axios.post("/upload", data)
   }
   //render() {
-    return (
-      <div className="App">
-        <div>            
-          <form>
-            <label>
-              Search : <input type="text" id = "query" name = "query" placeholder = "Search" />
-              <input type="button" value="Search" onClick = {() => GetQueryFrontEnd()} />
-              </label>
-          </form>
-          <input type="file" name="file" id = "file" onChange={onChangeHandler}/>
-          <button type="button" onClick={onClickHandlerUpload}>Upload</button> 
-
+    //if(pageState == "/"){
+      return (
+        <div className="App">
+          <div>            
+            <form>
+              <label>
+                Search : <input type="text" id = "query" name = "query" placeholder = "Search" />
+                <input type="button" value="Search" onClick = {() => GetQueryFrontEnd()} />
+                </label>
+            </form>
+            <input type="file" name="file" id = "file" onChange={onChangeHandler}/>
+            <button type="button" onClick={onClickHandlerUpload}>Upload</button> 
+  
+          </div>
+          <div >
+            {HTMLResult}
+          </div> 
         </div>
-        <div >
-          {HTMLResult}
-        </div>
-      </div>
-
-    )
-  //}
+        
+      )
 }
 export default App;
+  
