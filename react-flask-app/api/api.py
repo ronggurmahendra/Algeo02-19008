@@ -2,7 +2,9 @@ import os
 from flask import Flask, request, redirect, url_for, session
 #import fetch from 'isomorphic-fetch';
 from werkzeug.utils import secure_filename
-import search 
+import numpy as np
+import search
+import bacafile
 
 UPLOAD_FOLDER = ''
 
@@ -13,20 +15,45 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #    return {'time': time.time(), 'id' : [13,14,15]}
 print("wkwkwkwkw")
 
+
+count_upload = 0
+count_read = 0
+(doc1,title1,first1) = search.getDocuments2('https://www.tribunnews.com/')
+(doc2,title2,first2) = search.getDocuments('https://kompas.com/')
+doc = np.concatenate((doc1, doc2))
+title = np.concatenate((title1, title2))
+first = np.concatenate((first1, first2))
+clean_doc = search.cleanDocuments(doc)
+
+
 @app.route('/query', methods=['POST'])
 def Post_query():
     #query = request.form['query']
     query = request.get_json()
     print("query received",query)
     #print("query received",query)
-    (doc,title,first) = search.getDocuments2('https://www.tribunnews.com/')
-    doc1 = search.cleanDocuments(doc)
-    global df 
-    df = pd.DataFrame() 
+    global doc
+    global title
+    global first
+    global clean_doc
+    global count_read
+    if (count_read<count_upload):
+        (doc1,title1,first1) = search.getDocuments2('https://www.tribunnews.com/')
+        (doc2,title2,first2) = search.getDocuments('https://kompas.com/')
+        doc = np.concatenate((doc1, doc2))
+        title = np.concatenate((title1, title2))
+        first = np.concatenate((first1, first2))
+        (doc3,title3,first3) = bacafile.getDocumentsFiles()
+        doc = np.concatenate((doc, doc3))
+        title = np.concatenate((title, title3))
+        first = np.concatenate((first, first3))
+        count_read += 1    
+
+    global df
     global df2
     df2 = pd.DataFrame()
     print("Calculating sim")
-    (df, df2) = search.search(query, doc1, title, first)
+    (df, df2) = search.search(query, clean_doc, title, first)
     print(df)
 
 
@@ -69,6 +96,8 @@ def Get_file():
     destination="/".join([target, filename])
     file.save(destination)
     session['uploadFilePath']=destination
+    global count_upload
+    count_upload += 1
 
     return "ok"
 
