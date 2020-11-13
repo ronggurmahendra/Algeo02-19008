@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Doc1 from './Doc1';
+import Doc2 from './Doc2';
+import Doc3 from './Doc3';
+import Doc4 from './Doc4';
+import Doc5 from './Doc5';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
@@ -23,17 +27,17 @@ ReactDOM.render(
       <Route exact path="/Doc1" >
         <Doc1/>
       </Route>
-      <Route path="/Doc2">
-      <Doc1/>
+      <Route exact path="/Doc2">
+      <Doc2/>
       </Route>
-      <Route path="/Doc3">
-      <Doc1/>
+      <Route exact path="/Doc3">
+      <Doc3/>
       </Route>
-      <Route path="/Doc4">
-      <Doc1/>
+      <Route exact path="/Doc4">
+      <Doc4/>
       </Route>
-      <Route path="/Doc5">
-      <Doc1/>
+      <Route exact path="/Doc5">
+      <Doc5/>
       </Route>
     </Router>,
   document.getElementById('root')

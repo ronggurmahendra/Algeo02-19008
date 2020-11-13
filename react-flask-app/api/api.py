@@ -29,6 +29,8 @@ def Get_result():
         {"title":"Title1" ,"body":"Body1","sim":1,"count":100},
         {"title":"Title2" ,"body":"Body2","sim":2,"count":200},
         {"title":"Title3" ,"body":"Body3","sim":3,"count":300},
+        {"title":"Title4" ,"body":"Body4","sim":4,"count":400},
+        {"title":"Title5" ,"body":"Body5","sim":5,"count":500}
         ]
     } #data dummy (sementara matriks string dulu aja), sementara blm dibikin front endnya baru dikirim aja kalau mau liat di console
     #return {} #diisi yang bakal dikirim ke cllient
