@@ -26,11 +26,21 @@ def Post_query():
     print("Calculating sim")
     (df, df2) = search.search(query, doc1, title, first)
     print(df)
+
+
     return "ok"
 
 @app.route('/result')
 def Get_result():
+    print("ccontructiong result")
+    result = df.to_numpy()
+    print(result)
+    resultFinal = []
+    for i in range(5):
+        resultFinal.append({"sim":result[i][0],"title":result[i][1],"body":result[i][2],"count":result[i][3]})
+
     print("sending result")
+    """
     return {"content" : [
         {"title":"Title1" ,"body":"Body1","sim":1,"count":100},
         {"title":"Title2" ,"body":"Body2","sim":2,"count":200},
@@ -38,7 +48,9 @@ def Get_result():
         {"title":"Title4" ,"body":"Body4","sim":4,"count":400},
         {"title":"Title5" ,"body":"Body5","sim":5,"count":500}
         ]
-    } #data dummy (sementara matriks string dulu aja), sementara blm dibikin front endnya baru dikirim aja kalau mau liat di console
+    }"""
+    return {"content":resultFinal}     
+    #data dummy (sementara matriks string dulu aja), sementara blm dibikin front endnya baru dikirim aja kalau mau liat di console
     #return {} #diisi yang bakal dikirim ke cllient
 
 @app.route('/upload',methods=['POST'])

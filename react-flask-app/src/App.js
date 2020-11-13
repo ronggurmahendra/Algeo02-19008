@@ -46,9 +46,9 @@ function App() {
         [  
         <div style = {{border: '1px solid red',marginLeft: "25%",width: "50%",marginBottom:"1px",marginTop:"5px"}}>
           <Router><Link to = {link}  key = {i}>{currentResult[i].title}</Link></Router>
-          <p key = {j} >kalimat pertama : {currentResult[i].body}</p>
-          <p key = {k}>similatity : {currentResult[i].sim} %</p>
-          <p key = {a}>count : {currentResult[i].count}</p>
+          <p key = {j} style = {{marginBottom:"0px",marginTop:"0px"}}>kalimat pertama : {currentResult[i].body}</p>
+          <p key = {k} style = {{marginBottom:"0px",marginTop:"0px"}}>similatity : {currentResult[i].sim} %</p>
+          <p key = {a} style = {{marginBottom:"0px",marginTop:"0px"}}>count : {currentResult[i].count}</p>
         </div>]
       );
     }
