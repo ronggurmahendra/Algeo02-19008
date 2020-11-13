@@ -11,12 +11,16 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+import { useHistory } from 'react-router'
+//const history = useHistory()
+
 ReactDOM.render(
+  
     <Router>
       <Route exact path="/">
         <App />
       </Route>
-      <Route exact path="/Doc1">
+      <Route exact path="/Doc1" >
         <Doc1/>
       </Route>
       <Route path="/Doc2">
@@ -34,7 +38,10 @@ ReactDOM.render(
     </Router>,
   document.getElementById('root')
 );
-
+function printwkwk(){
+  console.log("wkwk")
+}
+//location.reload();
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

@@ -43,58 +43,12 @@ function App() {
       var link = "/Doc".concat(iStr);
       array.push(
         [  
-        <Router><Link to = {link}  key = {i} /*style = {{
-          background: "white",
-          borderTopWidth: 1,
-          borderTopmColor: 'red',
-          borderTopStyle: 'solid',
-
-          borderLeftWidth: 1,
-          borderLeftmColor: 'red',
-          borderLeftStyle: 'solid',
-          borderRightWidth: 1,
-          borderRightmColor: 'red',
-          borderRightStyle: 'solid',
-
-          color : 'black',
-          borderstyle: "solid",
-          marginLeft: "25%",
-          width: "50%",
-          marginBottom:"0px"}} */ 
-          >{currentResult[i].title}</Link></Router>,
-
-        <p key = {j} style = {{background: "white",
-
-        color : 'black',
-        borderstyle: "solid",
-        marginLeft: "25%",
-        width: "50%",
-      
-        borderLeftWidth: 1,
-        borderLeftmColor: 'red',
-        borderLeftStyle: 'solid',
-        borderRightWidth: 1,
-        borderRightmColor: 'red',
-        borderRightStyle: 'solid',
-        marginBottom:"0px",
-        marginTop:"0px"
-      }}   >kalimat pertama : {currentResult[i].body}</p>,
-        <p key = {k} style = {{background: "white",
-        borderBottomWidth: 1,
-        borderBottomColor: 'red',
-        borderBottomStyle: 'solid',
-        color : 'black',
-        borderstyle: "solid",
-        marginLeft: "25%",
-        width: "50%",
-        borderLeftWidth: 1,
-        borderLeftmColor: 'red',
-        borderLeftStyle: 'solid',
-        borderRightWidth: 1,
-        borderRightmColor: 'red',
-        borderRightStyle: 'solid',
-        marginTop:"0px"
-      }}   >similatity : {currentResult[i].sim} %</p>]
+        <div style = {{border: '1px solid red',marginLeft: "25%",width: "50%",marginBottom:"1px",marginTop:"5px"}}>
+          <Router><Link to = {link}  key = {i}>{currentResult[i].title}</Link></Router>
+          <p key = {j} >kalimat pertama : {currentResult[i].body}</p>
+          <p key = {k}>similatity : {currentResult[i].sim} %</p>
+          <p key = {k}>count : {currentResult[i].count}</p>
+        </div>]
       );
     }
     //console.log(array)
