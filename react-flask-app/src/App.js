@@ -21,17 +21,28 @@ function App() {
   const [currentResult, setCurrentResult] = useState(0);
   const [HTMLResult, setHTMLResult] = useState();
   const [filestate,setFilestate] = useState();
+  const [tabelState,setTabelState] = useState(0);
   //const [pageState,setPageState] = useState();
   //setPageState("/");
-  /*
+  
   useEffect(function getResult(){
-    console.log("masuk sini")
+    console.log("Getting Result")
     fetch('/result').then(res => res.json()).then(data => {
       console.log("result received")
       setCurrentResult(data.content);
 
     });
-  }, []);*/
+  }, []);
+  useEffect(function getTabel(){
+    console.log("Getting Table")
+    fetch('/tabel').then(res => res.json()).then(data => {
+      console.log("Table received")
+      console.log("state",tabelState)
+      setTabelState(data.content);
+      console.log("state",tabelState)
+    });
+  }, []);
+  /*
   function getResult(){
     console.log("Getting Result")
     fetch('/result').then(res => res.json()).then(data => {
@@ -39,9 +50,9 @@ function App() {
       setCurrentResult(data.content);
 
     });
-  }
+  }*/
   function bikinHTML(){
-    getResult();
+    //getResult();
     let array = [];
     for(let i = 0;i < currentResult.length;i++){
       let j = i + 100;
@@ -49,7 +60,7 @@ function App() {
       let a = i + 300;
       var iStr = (i+1).toString();
       var link = "/Doc".concat(iStr);
-      console.log(currentResult)
+      
       array.push(
         [  <div style = {{border: '1px solid red',marginLeft: "25%",width: "50%",marginBottom:"1px",marginTop:"5px"}}>
           <Router forceRefresh={true}><Link to = {link}  key = {i}>{currentResult[i].title}</Link></Router>
@@ -59,7 +70,8 @@ function App() {
         </div>]
       );
     }
-    //console.log(array)
+    //console.log(array)\
+    console.log(currentResult)
     setHTMLResult(array)
     //console.log('data.content',data.content)
     //console.log('array',array)
@@ -85,6 +97,7 @@ function App() {
       },
       body: JSON.stringify(data)
     });
+    window.location.reload(false);
   }
   function onChangeHandler(event){
     //console.log(event)
@@ -123,7 +136,10 @@ function App() {
           </div>
           <div >
             {HTMLResult}
-          </div> 
+          </div>
+          <div>
+            {tabelState}
+            </div> 
           <div>
             <Router forceRefresh={true}><Link to = "/perihal" >perihal</Link></Router>
           </div>
