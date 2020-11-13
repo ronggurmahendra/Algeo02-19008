@@ -34,6 +34,7 @@ def getDocuments(nama_web):
 
         frstsntc=[]
         documents=[]
+        j=0
         for i in link:
                 r = requests.get(i)
 
@@ -44,8 +45,9 @@ def getDocuments(nama_web):
                         isi.append(i.text)
                 kalimat = isi[0].split(". ")
                 frstsntc.append(kalimat[0])
-                isi = np.concatenate((title, isi))
+                isi = np.concatenate(([title[j]], isi))
                 documents.append(' '.join(isi))
+                j+=1
         return (documents,title,frstsntc)
 
 def getDocuments2(nama_web):
@@ -74,6 +76,7 @@ def getDocuments2(nama_web):
 
         frstsntc=[]
         documents=[]
+        j = 0
         for i in link:
                 r = requests.get(i)
 
@@ -84,8 +87,9 @@ def getDocuments2(nama_web):
                         isi.append(i.text)
                 kalimat = isi[0].split(". ")
                 frstsntc.append(kalimat[0])
-                isi = np.concatenate((title, isi))
+                isi = np.concatenate(([title[j]], isi))
                 documents.append(' '.join(isi))
+                j+=1
         return (documents,title,frstsntc)
 
 def cleanDocuments(documents):
@@ -170,13 +174,23 @@ def search(query, doc1, title, first):
 
 # (doc,title,first) = getDocuments('https://detik.com/')
 # (doc,title,first) = getDocuments('https://kompas.com/')
-# # (doc,title,first) = getDocuments2('https://www.tribunnews.com/')
+#(doc,title,first) = getDocuments2('https://www.tribunnews.com/')
 # # (doc, title, first)=bacafile.getDocumentsFiles()
-# doc1 = cleanDocuments(doc)
+#doc1 = cleanDocuments(doc)
 # #print(doc[1])
 # #print(doc1[1])
+# (doc1,title1,first1) = getDocuments2('https://www.tribunnews.com/')
+# (doc2,title2,first2) = getDocuments('https://kompas.com/')
+# (doc3,title3,first3) = bacafile.getDocumentsFiles()
+# doc = np.concatenate((doc1, doc2))
+# doc = np.concatenate((doc, doc3))
+# title = np.concatenate((title1, title2))
+# title = np.concatenate((title, title3))
+# first = np.concatenate((first1, first2))
+# first = np.concatenate((first, first3))
+# clean_doc = cleanDocuments(doc)
 # q = 'polisi memenangkan monopoli Palsu mobil'
-# (df, df2) = search(q, doc1, title, first)
+# (df, df2) = search(q, clean_doc, title, first)
 # print(df)
 # print(df2)
 # #print(doc1)
