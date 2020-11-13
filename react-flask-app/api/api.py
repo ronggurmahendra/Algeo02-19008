@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, redirect, url_for, session
 #import fetch from 'isomorphic-fetch';
 from werkzeug.utils import secure_filename
-import search
+import search 
 
 UPLOAD_FOLDER = ''
 
@@ -11,16 +11,21 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #@app.route('/time')
 #def get_current_time():
 #    return {'time': time.time(), 'id' : [13,14,15]}
-
+print("wkwkwkwkw")
 
 @app.route('/query', methods=['POST'])
 def Post_query():
     #query = request.form['query']
     query = request.get_json()
+    print("query received",query)
     #print("query received",query)
-    
-    print("query received")
-    print(query)
+    (doc,title,first) = search.getDocuments2('https://www.tribunnews.com/')
+    doc1 = search.cleanDocuments(doc)
+    global df
+    global df2
+    print("Calculating sim")
+    (df, df2) = search.search(query, doc1, title, first)
+    print(df)
     return "ok"
 
 @app.route('/result')
