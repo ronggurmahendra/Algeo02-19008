@@ -1,16 +1,14 @@
 import re
 import string
 from numpy.core.defchararray import title
-#from numpy.lib.function_base import vectorize
 import requests
 import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
-#from sklearn.feature_extraction.text import TfidfVectorizer
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+#import dari file lain
 import bacafile
 
-#vectorizer = TfidfVectorizer()
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
 #Webscraping
@@ -20,10 +18,21 @@ def getDocuments(nama_web):
         soup = BeautifulSoup(r.content, 'html.parser')
 
         link = []
+        title=[]
         for i in soup.find('div', {'class':'most__wrap'}).find_all('a'):
                 i['href'] = i['href'] + '?page=all'
                 link.append(i['href'])
+        
+        for i in soup.find('div', {'class':'most__wrap'}).find_all('h4'):
+                temp=i.string.strip('<h4 class="most__title">')
+                temp=i.string.strip('</h4>')
+                temp.strip()
+                title.append(temp)
+                # print(temp)
+                # print(i)
+                # print(type(i))
 
+        frstsntc=[]
         documents=[]
         for i in link:
                 r = requests.get(i)
@@ -33,10 +42,51 @@ def getDocuments(nama_web):
                 isi = []
                 for i in soup.find('div', {'class':'read__content'}).find_all('p'):
                         isi.append(i.text)
-
+                kalimat = isi[0].split(". ")
+                frstsntc.append(kalimat[0])
+                isi = np.concatenate((title, isi))
                 documents.append(' '.join(isi))
+        return (documents,title,frstsntc)
 
-        return documents
+def getDocuments2(nama_web):
+        r = requests.get(nama_web)
+
+        soup = BeautifulSoup(r.content, 'html.parser')
+
+        link = []
+        title=[]
+        for i in soup.find('div', {'class':'mb20 populer'}).find_all('a'):
+                # i['href'] = 'http://' + i['href'] #+?page=all'
+                i['href'] = i['href']
+                if i['href'].startswith('https://'):
+                        link.append(i['href'])
+        
+        for i in soup.find('div', {'class':'mb20 populer'}).find_all('a'):
+                if i['title'] not in title: 
+                        title.append(i['title'])
+                # print(temp)
+                # print(i)
+                # print(type(i))
+        link.pop(0)
+        title.pop(0)
+        # print(link)
+        # print(title)
+
+        frstsntc=[]
+        documents=[]
+        for i in link:
+                r = requests.get(i)
+
+                soup = BeautifulSoup(r.content, 'html.parser')
+
+                isi = []
+                for i in soup.find('div', {'class':'side-article txt-article'}).find_all('p'):
+                        isi.append(i.text)
+                kalimat = isi[0].split(". ")
+                frstsntc.append(kalimat[0])
+                isi = np.concatenate((title, isi))
+                documents.append(' '.join(isi))
+        return (documents,title,frstsntc)
 
 def cleanDocuments(documents):
         clean = []
@@ -54,12 +104,6 @@ def cleanDocuments(documents):
 
         return clean
 
-'''def create_dataframe(clean_documents):
-        X = vectorizer.fit_transform(clean_documents)
-
-        df = pd.DataFrame(X.T.toarray(), index=vectorizer.get_feature_names())
-
-        return df'''
 
 def search(query, doc1, title, first):
         query = stemmer.stem(query)
@@ -124,21 +168,15 @@ def search(query, doc1, title, first):
         
         return (df, df2)
 
-
-#doc = getDocuments('https://bola.kompas.com/')
-(doc, title, first)=bacafile.getDocumentsFiles()
-doc1 = cleanDocuments(doc)
-#print(doc[1])
-#print(doc1[1])
-#df = create_dataframe(doc1)
-q = 'motogp memenangkan motor'
-#q = stemmer.stem(q)
-#q = q.split()
-#print(q)
-#for i in q:
-        #print(i)
-
-(df, df2) = search(q, doc1, title, first)
-print(df)
-print(df2)
-#print(doc1)
+# (doc,title,first) = getDocuments('https://detik.com/')
+# (doc,title,first) = getDocuments('https://kompas.com/')
+# # (doc,title,first) = getDocuments2('https://www.tribunnews.com/')
+# # (doc, title, first)=bacafile.getDocumentsFiles()
+# doc1 = cleanDocuments(doc)
+# #print(doc[1])
+# #print(doc1[1])
+# q = 'polisi memenangkan monopoli Palsu mobil'
+# (df, df2) = search(q, doc1, title, first)
+# print(df)
+# print(df2)
+# #print(doc1)

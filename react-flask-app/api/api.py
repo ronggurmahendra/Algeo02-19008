@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, redirect, url_for, session
 #import fetch from 'isomorphic-fetch';
 from werkzeug.utils import secure_filename
+import search
 
 UPLOAD_FOLDER = ''
 
