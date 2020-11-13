@@ -39,6 +39,7 @@ function App() {
     for(let i = 0;i < currentResult.length;i++){
       let j = i + 100;
       let k = i + 200;
+      let a = i + 300;
       var iStr = (i+1).toString();
       var link = "/Doc".concat(iStr);
       array.push(
@@ -47,7 +48,7 @@ function App() {
           <Router><Link to = {link}  key = {i}>{currentResult[i].title}</Link></Router>
           <p key = {j} >kalimat pertama : {currentResult[i].body}</p>
           <p key = {k}>similatity : {currentResult[i].sim} %</p>
-          <p key = {k}>count : {currentResult[i].count}</p>
+          <p key = {a}>count : {currentResult[i].count}</p>
         </div>]
       );
     }
