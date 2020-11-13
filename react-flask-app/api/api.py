@@ -21,8 +21,10 @@ def Post_query():
     #print("query received",query)
     (doc,title,first) = search.getDocuments2('https://www.tribunnews.com/')
     doc1 = search.cleanDocuments(doc)
-    global df
+    global df 
+    df = pd.DataFrame() 
     global df2
+    df2 = pd.DataFrame()
     print("Calculating sim")
     (df, df2) = search.search(query, doc1, title, first)
     print(df)
@@ -36,7 +38,7 @@ def Get_result():
     result = df.to_numpy()
     print(result)
     resultFinal = []
-    for i in range(5):
+    for i in range(len(result)):
         resultFinal.append({"sim":result[i][0],"title":result[i][1],"body":result[i][2],"count":result[i][3]})
 
     print("sending result")
@@ -75,4 +77,4 @@ def Get_file():
 if __name__ == '__main__':
     print("Initializing Server")
     app.secret_key = os.urandom(24)
-    app.run(debug = True)
+    app.run()

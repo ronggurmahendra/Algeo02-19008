@@ -1,18 +1,18 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect/*, Component */} from 'react';
 import './App.css';
 //import { Form, Input, Rating, Button } from "semantic-ui-react";
 
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 //import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
 import axios from 'axios';
 //import Contact from './Dokumen';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect
+  //Switch,
+  //Route,
+  Link
+  //Redirect
 } from "react-router-dom";
 //import {Router, Link, RouteHandler} from 'react-router';
 
@@ -21,20 +21,27 @@ function App() {
   const [currentResult, setCurrentResult] = useState(0);
   const [HTMLResult, setHTMLResult] = useState();
   const [filestate,setFilestate] = useState();
-  const [pageState,setPageState] = useState();
-  //var url = "http://localhost:3000"
-  //const [query,setQuer]
+  //const [pageState,setPageState] = useState();
   //setPageState("/");
-  useEffect(() => {
-    //console.log("masuk sini")
+  /*
+  useEffect(function getResult(){
+    console.log("masuk sini")
     fetch('/result').then(res => res.json()).then(data => {
       console.log("result received")
       setCurrentResult(data.content);
 
     });
-  }, []);
+  }, []);*/
+  function getResult(){
+    console.log("Getting Result")
+    fetch('/result').then(res => res.json()).then(data => {
+      console.log("result received")
+      setCurrentResult(data.content);
 
-  var renderList = setInterval(function bikinHTML(){
+    });
+  }
+  function bikinHTML(){
+    getResult();
     let array = [];
     for(let i = 0;i < currentResult.length;i++){
       let j = i + 100;
@@ -42,10 +49,10 @@ function App() {
       let a = i + 300;
       var iStr = (i+1).toString();
       var link = "/Doc".concat(iStr);
+      console.log(currentResult)
       array.push(
-        [  
-        <div style = {{border: '1px solid red',marginLeft: "25%",width: "50%",marginBottom:"1px",marginTop:"5px"}}>
-          <Router><Link to = {link}  key = {i}>{currentResult[i].title}</Link></Router>
+        [  <div style = {{border: '1px solid red',marginLeft: "25%",width: "50%",marginBottom:"1px",marginTop:"5px"}}>
+          <Router forceRefresh={true}><Link to = {link}  key = {i}>{currentResult[i].title}</Link></Router>
           <p key = {j} style = {{marginBottom:"0px",marginTop:"0px"}}>kalimat pertama : {currentResult[i].body}</p>
           <p key = {k} style = {{marginBottom:"0px",marginTop:"0px"}}>similatity : {currentResult[i].sim} %</p>
           <p key = {a} style = {{marginBottom:"0px",marginTop:"0px"}}>count : {currentResult[i].count}</p>
@@ -57,7 +64,10 @@ function App() {
     //console.log('data.content',data.content)
     //console.log('array',array)
     //console.log('HTMLResult',HTMLResult)
-  },2000)
+  }
+
+  //bikinHTML();
+  var renderList = setInterval(bikinHTML,10000)
 
   function GetQueryFrontEnd(){
     //a.preventDefault();
@@ -114,6 +124,9 @@ function App() {
           <div >
             {HTMLResult}
           </div> 
+          <div>
+            <Router forceRefresh={true}><Link to = "/perihal" >perihal</Link></Router>
+          </div>
         </div>
         
       )

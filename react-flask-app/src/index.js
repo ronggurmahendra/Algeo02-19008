@@ -7,6 +7,7 @@ import Doc2 from './Doc2';
 import Doc3 from './Doc3';
 import Doc4 from './Doc4';
 import Doc5 from './Doc5';
+import Perihal from './perihal';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
@@ -20,7 +21,7 @@ import { useHistory } from 'react-router'
 
 ReactDOM.render(
   
-    <Router>
+    <Router forceRefresh={true}>
       <Route exact path="/">
         <App />
       </Route>
@@ -38,6 +39,9 @@ ReactDOM.render(
       </Route>
       <Route exact path="/Doc5">
       <Doc5/>
+      </Route>
+      <Route exact path="/perihal">
+      <Perihal/>
       </Route>
     </Router>,
   document.getElementById('root')

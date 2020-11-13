@@ -1,19 +1,19 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect/*, Component */} from 'react';
 import './App.css';
 //import { Form, Input, Rating, Button } from "semantic-ui-react";
 
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 //import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
-import axios from 'axios';
+//import axios from 'axios';
 //import Contact from './Dokumen';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect
-} from "react-router-dom";
+//import {
+//  BrowserRouter as Router,
+//  Switch,
+//  Route,
+//  Link,
+//  Redirect
+//} from "react-router-dom";
 /*
 export class  Doc1 extends React.Component{
     constructor(props){
@@ -62,10 +62,10 @@ function Doc4(props) {
         });
       }, []);
       console.log(currentResult)
-    if (currentResult == 0){
+    if (currentResult === 0){
         return(
             <div className="Doc1">
-                <p>masukin doc1</p>
+                <p>Retrieving Doc4...</p>
             </div>
         )
     }else{
