@@ -19,12 +19,12 @@ function Doc1(props) {
     const [currentResult, setCurrentResult] = useState(0);
     useEffect(() => {
         //console.log("masuk sini")
-        fetch('/result').then(res => res.json()).then(data => {
+        fetch('/Get_Doc1').then(res => res.json()).then(data => {
             if(data){
-                console.log("result received")
+                console.log("Doc1 received")
                 console.log("data",data)
-              setCurrentResult(data.content);
-              console.log(currentResult);
+                setCurrentResult(data);
+                console.log(currentResult);
             }
         });
       }, []);
@@ -38,8 +38,8 @@ function Doc1(props) {
     }else{
         return (
             <div>
-            <p>{currentResult[0].title}</p>
-            <p>{currentResult[0].body}</p>
+            <p>{currentResult.title}</p>
+            <p>{currentResult.content}</p>
             </div>
             )
     }

@@ -52,12 +52,12 @@ function Doc5(props) {
     const [currentResult, setCurrentResult] = useState(0);
     useEffect(() => {
         //console.log("masuk sini")
-        fetch('/result').then(res => res.json()).then(data => {
+        fetch('/Get_Doc5').then(res => res.json()).then(data => {
             if(data){
-                console.log("result received")
+                console.log("Doc5 received")
                 console.log("data",data)
-              setCurrentResult(data.content);
-              console.log(currentResult);
+                setCurrentResult(data);
+                console.log(currentResult);
             }
         });
       }, []);
@@ -71,8 +71,8 @@ function Doc5(props) {
     }else{
         return (
             <div>
-            <p>{currentResult[4].title}</p>
-            <p>{currentResult[4].body}</p>
+            <p>{currentResult.title}</p>
+            <p>{currentResult.content}</p>
             </div>
             )
     }

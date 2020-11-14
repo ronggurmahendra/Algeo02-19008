@@ -92,6 +92,27 @@ def Get_result():
     #data dummy (sementara matriks string dulu aja), sementara blm dibikin front endnya baru dikirim aja kalau mau liat di console
     #return {} #diisi yang bakal dikirim ke cllient
 
+@app.route('/Get_Doc1')
+def Get_Doc1():
+    return {"title":"Title1" ,"content":"content1"}
+    
+@app.route('/Get_Doc2')
+def Get_Doc2():
+    return {"title":"Title2" ,"content":"content2"}
+
+@app.route('/Get_Doc3')
+def Get_Doc3():
+    return {"title":"Title3" ,"content":"content3"}
+
+@app.route('/Get_Doc4')
+def Get_Doc4():
+    return {"title":"Title4" ,"content":"content4"}
+
+@app.route('/Get_Doc5')
+def Get_Doc5():
+    return {"title":"Title5" ,"content":"content5"}
+
+
 @app.route('/upload',methods=['POST'])
 def Get_file():
     print("receiving file")
