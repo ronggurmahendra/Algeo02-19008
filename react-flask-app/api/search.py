@@ -170,8 +170,8 @@ def search(query, doc1, title, first, doc):
         title1 = []
         vectors1= []
         for j in range (i):
-                title1.append(title[index[i]])
-                vectors1.append(vectors[index[i]])
+                title1.append(title[index[j]])
+                vectors1.append(vectors[index[j]])
         title1 = np.concatenate((['query'], title1))
         q_vector = [q_vector]
         vectors1 = np.concatenate((q_vector, vectors1))
