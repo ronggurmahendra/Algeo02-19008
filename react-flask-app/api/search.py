@@ -160,14 +160,22 @@ def search(query, doc1, title, first, doc):
                 'jumlah kata': wordcount,
                 'document': doc}
 
-        df = pd.DataFrame(data, columns = ['similarity', 'title', 'first', 'jumlah kata', 'doc'])
+        df = pd.DataFrame(data, columns = ['similarity', 'title', 'first', 'jumlah kata', 'document'])
         df = df.sort_values(by=['similarity'], ascending=False)
         #print(df)
-
-        title = np.concatenate((['query'], title))
+        index = list(df.index.values)
+        i = 5
+        if len(index)<5:
+                i = len(index)
+        title1 = []
+        vectors1= []
+        for j in range (i):
+                title1.append(title[index[i]])
+                vectors1.append(vectors[index[i]])
+        title1 = np.concatenate((['query'], title1))
         q_vector = [q_vector]
-        vectors = np.concatenate((q_vector, vectors))
-        df2 = pd.DataFrame(vectors, columns = element, index = title)
+        vectors1 = np.concatenate((q_vector, vectors1))
+        df2 = pd.DataFrame(vectors1, columns = element, index = title1)
         df2 = df2.T
         #print(df2)
         
@@ -191,7 +199,7 @@ def search(query, doc1, title, first, doc):
 # first = np.concatenate((first, first3))
 # clean_doc = cleanDocuments(doc)
 # q = 'polisi memenangkan monopoli Palsu mobil'
-# (df, df2) = search(q, clean_doc, title, first)
+# (df, df2) = search(q, clean_doc, title, first, doc)
 # print(df)
 # print(df2)
 # #print(doc1)
