@@ -50,13 +50,18 @@ def Post_query():
         title = np.concatenate((title, title3))
         first = np.concatenate((first, first3))
         count_read += 1    
+        clean_doc = search.cleanDocuments(doc)
         print("done recalculating Sim")
 
     global df
     global df2
 
     print("Calculating sim")
+    print("doc",doc)
+    print("clean_doc",clean_doc)
+    print("title",title)
     (df, df2) = search.search(query, clean_doc, title, first, doc)
+    print("done Calculating sim")
     print(df)
 
     #print(df2.to_html())
@@ -77,7 +82,7 @@ def Get_result():
         panjang = len(result)
     for i in range(panjang):
         resultFinal.append({"sim":result[i][0],"title":result[i][1],"body":result[i][2],"count":result[i][3]})
-
+    print(resultFinal)
     print("sending result")
     """
     return {"content" : [
@@ -137,4 +142,4 @@ def Get_file():
 if __name__ == '__main__':
     #print("Initializing Server")
     app.secret_key = os.urandom(24)
-    app.run(debug=True)
+    app.run(debug=True,use_reloader=False)
