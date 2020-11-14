@@ -21,7 +21,7 @@ function App() {
   const [currentResult, setCurrentResult] = useState(0);
   const [HTMLResult, setHTMLResult] = useState();
   const [filestate,setFilestate] = useState();
-  const [tabelState,setTabelState] = useState(0);
+  const [tabelState,setTabelState] = useState( {__html: '<div>Hello World!</div>'} );
   //const [pageState,setPageState] = useState();
   //setPageState("/");
   
@@ -37,9 +37,14 @@ function App() {
     console.log("Getting Table")
     fetch('/tabel').then(res => res.json()).then(data => {
       console.log("Table received")
-      console.log("state",tabelState)
+      let temp = document.createElement('div');
+      temp.innerHTML = data.content;
+      var htmlObject = temp;
+      //console.log("state",tabelState)
       setTabelState(data.content);
-      console.log("state",tabelState)
+      
+      
+      //console.log("state",tabelState)
     });
   }, []);
   /*
@@ -137,9 +142,8 @@ function App() {
           <div >
             {HTMLResult}
           </div>
-          <div>
-            {tabelState}
-            </div> 
+          <div dangerouslySetInnerHTML={{ __html: tabelState }} />
+            
           <div>
             <Router forceRefresh={true}><Link to = "/perihal" >perihal</Link></Router>
           </div>

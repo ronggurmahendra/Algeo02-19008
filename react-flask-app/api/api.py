@@ -39,6 +39,7 @@ def Post_query():
     global clean_doc
     global count_read
     if (count_read<count_upload):
+        print("recalculating Sim")
         (doc1,title1,first1) = search.getDocuments2('https://www.tribunnews.com/')
         (doc2,title2,first2) = search.getDocuments('https://kompas.com/')
         doc = np.concatenate((doc1, doc2))
@@ -49,6 +50,7 @@ def Post_query():
         title = np.concatenate((title, title3))
         first = np.concatenate((first, first3))
         count_read += 1    
+        print("done recalculating Sim")
 
     global df
     global df2
@@ -58,7 +60,7 @@ def Post_query():
     print(df)
 
     #print(df2.to_html())
-    return "ok"
+    return {"messege":"ok"}
 @app.route('/tabel')
 def Get_tabel():
     print("sending table")
