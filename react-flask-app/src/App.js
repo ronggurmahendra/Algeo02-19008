@@ -101,7 +101,9 @@ function App() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(data)
-    });
+    }).then(
+      console.log("masuk sini")
+    );
     window.location.reload(false);
   }
   function onChangeHandler(event){
