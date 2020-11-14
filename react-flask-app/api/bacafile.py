@@ -12,6 +12,7 @@ def getDocumentsFiles():
         title=[]
         frstsntc=[]
         #loop untuk setiap file
+        j = 0
         for x in arr:
             f=open(x,"r")
             isi = []
@@ -25,8 +26,9 @@ def getDocumentsFiles():
     
             kalimat = isi[0].split(". ")
             frstsntc.append(kalimat[0])
-            isi = np.concatenate((title, isi))
+            isi = np.concatenate((title[j], isi))
             documents.append(' '.join(isi))
+            j+=1
         f.close()
         #print(title)
         #print(frstsntc)
