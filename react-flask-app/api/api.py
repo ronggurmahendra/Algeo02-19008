@@ -54,7 +54,7 @@ def Post_query():
     global df2
 
     print("Calculating sim")
-    (df, df2) = search.search(query, clean_doc, title, first)
+    (df, df2) = search.search(query, clean_doc, title, first, doc)
     print(df)
 
     #print(df2.to_html())

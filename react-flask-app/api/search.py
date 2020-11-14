@@ -109,7 +109,7 @@ def cleanDocuments(documents):
         return clean
 
 
-def search(query, doc1, title, first):
+def search(query, doc1, title, first, doc):
         query = stemmer.stem(query)
         query = query.split()
         
@@ -157,9 +157,10 @@ def search(query, doc1, title, first):
         data = {'similarity': similarity,
                 'title' : title,
                 'first': first,
-                'jumlah kata': wordcount}
+                'jumlah kata': wordcount,
+                'document': doc}
 
-        df = pd.DataFrame(data, columns = ['similarity', 'title', 'first', 'jumlah kata'])
+        df = pd.DataFrame(data, columns = ['similarity', 'title', 'first', 'jumlah kata', 'doc'])
         df = df.sort_values(by=['similarity'], ascending=False)
         #print(df)
 
