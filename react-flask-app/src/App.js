@@ -119,6 +119,7 @@ function App() {
   function onClickHandlerUpload () {
     let data = new FormData()
     //var file = document.getElementById("file").value;
+    
     data.append('file', filestate.selectedFile[0],filestate.selectedFile[0].name)
     //console.log(filestate.selectedFile[0].name)
     //data.set('file', filestate.selectedFile)

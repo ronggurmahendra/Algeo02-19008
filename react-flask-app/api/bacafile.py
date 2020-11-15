@@ -26,7 +26,7 @@ def getDocumentsFiles():
     
             kalimat = isi[0].split(". ")
             frstsntc.append(kalimat[0])
-            isi = np.concatenate((title[j], isi))
+            isi = np.concatenate(([title[j]], isi))
             documents.append(' '.join(isi))
             j+=1
         f.close()

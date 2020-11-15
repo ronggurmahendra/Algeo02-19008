@@ -40,6 +40,8 @@ def Post_query():
     global readfiles
     if (readfiles):
         print("recalculating Sim")
+        #(doc1,title1,first1) = search.getDocuments2('https://www.tribunnews.com/')
+        #(doc2,title2,first2) = search.getDocuments('https://kompas.com/')
         doc = np.concatenate((doc1, doc2))
         title = np.concatenate((title1, title2))
         first = np.concatenate((first1, first2))
@@ -55,9 +57,9 @@ def Post_query():
     global df2
 
     print("Calculating sim")
-    print("doc",doc)
-    print("clean_doc",clean_doc)
-    print("title",title)
+#    print("doc",doc)
+#    print("clean_doc",clean_doc)
+#    print("title",title)
     (df, df2) = search.search(query, clean_doc, title, first, doc)
     print("done Calculating sim")
     print(df)
@@ -97,29 +99,35 @@ def Get_result():
 
 @app.route('/Get_Doc1')
 def Get_Doc1():
-    return {"title":"Title1" ,"content":"content1"}
+    result = df.to_numpy()
+    return {"title":result[0][1] ,"content":result[0][4]}
     
 @app.route('/Get_Doc2')
 def Get_Doc2():
-    return {"title":"Title2" ,"content":"content2"}
+    result = df.to_numpy()
+    return {"title":result[1][1] ,"content":result[1][4]}
 
 @app.route('/Get_Doc3')
 def Get_Doc3():
-    return {"title":"Title3" ,"content":"content3"}
+    result = df.to_numpy()
+    return {"title":result[2][1] ,"content":result[2][4]}
 
 @app.route('/Get_Doc4')
 def Get_Doc4():
-    return {"title":"Title4" ,"content":"content4"}
+    result = df.to_numpy()
+    return {"title":result[3][1] ,"content":result[3][4]}
 
 @app.route('/Get_Doc5')
 def Get_Doc5():
-    return {"title":"Title5" ,"content":"content5"}
+    result = df.to_numpy()
+    return {"title":result[4][1] ,"content":result[4][4]}
 
 
 @app.route('/upload',methods=['POST'])
 def Get_file():
     print("receiving file")
     target=os.path.join(UPLOAD_FOLDER,'docs')
+    print(target)
     if not os.path.isdir(target):
         os.mkdir(target)
     file = request.files['file']
