@@ -1,4 +1,5 @@
 import os
+from os import read
 from flask import Flask, request, redirect, url_for, session, render_template
 #import fetch from 'isomorphic-fetch';
 from werkzeug.utils import secure_filename
@@ -17,8 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 print("initializing Server")
 df = pd.DataFrame()
 df2 = pd.DataFrame()
-count_upload = 0
-count_read = 0
+readfiles = False
 (doc1,title1,first1) = search.getDocuments2('https://www.tribunnews.com/')
 (doc2,title2,first2) = search.getDocuments('https://kompas.com/')
 doc = np.concatenate((doc1, doc2))
@@ -37,20 +37,18 @@ def Post_query():
     global title
     global first
     global clean_doc
-    global count_read
-    if (count_read<count_upload):
+    global readfiles
+    if (readfiles):
         print("recalculating Sim")
-        (doc1,title1,first1) = search.getDocuments2('https://www.tribunnews.com/')
-        (doc2,title2,first2) = search.getDocuments('https://kompas.com/')
         doc = np.concatenate((doc1, doc2))
         title = np.concatenate((title1, title2))
         first = np.concatenate((first1, first2))
         (doc3,title3,first3) = bacafile.getDocumentsFiles()
         doc = np.concatenate((doc, doc3))
         title = np.concatenate((title, title3))
-        first = np.concatenate((first, first3))
-        count_read += 1    
+        first = np.concatenate((first, first3))  
         clean_doc = search.cleanDocuments(doc)
+        readfiles = False
         print("done recalculating Sim")
 
     global df
@@ -132,8 +130,8 @@ def Get_file():
     destination="/".join([target, filename])
     file.save(destination)
     session['uploadFilePath']=destination
-    global count_upload
-    count_upload += 1
+    global readfiles
+    readfiles = True
 
     return "ok"
 
