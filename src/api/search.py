@@ -11,7 +11,7 @@ import bacafile
 
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
-#Webscraping
+#Webscraping kompas.com
 def getDocuments(nama_web):
         r = requests.get(nama_web)
 
@@ -28,9 +28,7 @@ def getDocuments(nama_web):
                 temp=i.string.strip('</h4>')
                 temp.strip()
                 title.append(temp)
-                # print(temp)
-                # print(i)
-                # print(type(i))
+                
 
         frstsntc=[]
         documents=[]
@@ -49,7 +47,7 @@ def getDocuments(nama_web):
                 documents.append(' '.join(isi))
                 j+=1
         return (documents,title,frstsntc)
-
+#Webscraping tribunnews.com
 def getDocuments2(nama_web):
         r = requests.get(nama_web)
 
@@ -66,13 +64,9 @@ def getDocuments2(nama_web):
         for i in soup.find('div', {'class':'mb20 populer'}).find_all('a'):
                 if i['title'] not in title: 
                         title.append(i['title'])
-                # print(temp)
-                # print(i)
-                # print(type(i))
+                
         link.pop(0)
         title.pop(0)
-        # print(link)
-        # print(title)
 
         frstsntc=[]
         documents=[]
@@ -110,22 +104,22 @@ def cleanDocuments(documents):
 
 
 def search(query, doc1, title, first, doc):
-        query = stemmer.stem(query)
-        query = query.split()
+        query = stemmer.stem(query) #stemming query
+        query = query.split() #memisahkan query menjadi kata-kata
         
         element = []
-        
+        #Membuat array element berisi elemen unik dari query
         for i in query:
                 if i not in element:
                         element.append(i)
-        
+        #Membuat vektor query
         q_vector = [0 for i in range(len(element))]        
         for i in range (len(element)):
                 for j in query:
                         if element[i] == j:
                                 q_vector[i] += 1
         q_vector = np.array(q_vector)
-        
+        #Membuat vektor setiap dokumen dan juga menghitung banyak kata
         vectors = []
         wordcount = []
         for i in doc1:
@@ -140,8 +134,7 @@ def search(query, doc1, title, first, doc):
                 v1 = np.array(v1)
                 vectors.append(v1)
 
-        #print(vectors)
-
+        #Menghitung similarity
         similarity = []
         q_norm = np.linalg.norm(q_vector)
         for i in vectors:
@@ -152,8 +145,8 @@ def search(query, doc1, title, first, doc):
                 else:
                         sim = 0
                 similarity.append(sim)
-        #print(similarity)
-
+        
+        #Membuat dataframe berisis similarity, judul, kalimat pertama, jumlah kata, dan dokumen
         data = {'similarity': similarity,
                 'title' : title,
                 'first': first,
@@ -162,7 +155,8 @@ def search(query, doc1, title, first, doc):
 
         df = pd.DataFrame(data, columns = ['similarity', 'title', 'first', 'jumlah kata', 'document'])
         df = df.sort_values(by=['similarity'], ascending=False)
-        #print(df)
+        
+        #Membuat dataframe tabel jumlah kata
         index = list(df.index.values)
         i = 5
         if len(index)<5:
@@ -177,29 +171,8 @@ def search(query, doc1, title, first, doc):
         vectors1 = np.concatenate((q_vector, vectors1))
         df2 = pd.DataFrame(vectors1, columns = element, index = title1)
         df2 = df2.T
-        #print(df2)
+        
         
         return (df, df2)
 
-# (doc,title,first) = getDocuments('https://detik.com/')
-# (doc,title,first) = getDocuments('https://kompas.com/')
-#(doc,title,first) = getDocuments2('https://www.tribunnews.com/')
-# # (doc, title, first)=bacafile.getDocumentsFiles()
-#doc1 = cleanDocuments(doc)
-# #print(doc[1])
-# #print(doc1[1])
-# (doc1,title1,first1) = getDocuments2('https://www.tribunnews.com/')
-# (doc2,title2,first2) = getDocuments('https://kompas.com/')
-# (doc3,title3,first3) = bacafile.getDocumentsFiles()
-# doc = np.concatenate((doc1, doc2))
-# doc = np.concatenate((doc, doc3))
-# title = np.concatenate((title1, title2))
-# title = np.concatenate((title, title3))
-# first = np.concatenate((first1, first2))
-# first = np.concatenate((first, first3))
-# clean_doc = cleanDocuments(doc)
-# q = 'polisi memenangkan monopoli Palsu mobil'
-# (df, df2) = search(q, clean_doc, title, first, doc)
-# print(df)
-# print(df2)
-# #print(doc1)
+

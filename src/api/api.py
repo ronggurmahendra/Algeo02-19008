@@ -19,6 +19,7 @@ print("initializing Server")
 df = pd.DataFrame()
 df2 = pd.DataFrame()
 readfiles = False
+#webscraping dan membersihkan dokumen
 (doc1,title1,first1) = search.getDocuments2('https://www.tribunnews.com/')
 (doc2,title2,first2) = search.getDocuments('https://kompas.com/')
 doc = np.concatenate((doc1, doc2))
@@ -38,10 +39,9 @@ def Post_query():
     global first
     global clean_doc
     global readfiles
+    #Jika user mengupload file menggabungkan file hasil upload ke array dokumen
     if (readfiles):
         print("recalculating Sim")
-        #(doc1,title1,first1) = search.getDocuments2('https://www.tribunnews.com/')
-        #(doc2,title2,first2) = search.getDocuments('https://kompas.com/')
         doc = np.concatenate((doc1, doc2))
         title = np.concatenate((title1, title2))
         first = np.concatenate((first1, first2))
@@ -60,7 +60,7 @@ def Post_query():
 #    print("doc",doc)
 #    print("clean_doc",clean_doc)
 #    print("title",title)
-    (df, df2) = search.search(query, clean_doc, title, first, doc)
+    (df, df2) = search.search(query, clean_doc, title, first, doc) #Menghitung similarity
     print("done Calculating sim")
     print(df)
 
